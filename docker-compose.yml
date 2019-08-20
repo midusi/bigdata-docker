@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  bigdata:
+    # image: genarocamele/bigdata:latest
+
+    # Para contruir a partir del dockerfile, no descomentar a menos
+    # que se quiera probar con el Dockerfile
+    build:
+      context: .
+    image: bigdata
+    # 'command' nos permite iniciar el contenedor con una consola bash
+    command: bash
+    # El network = host permite que se usen todos los puertos y configuracion
+    # de red que esta utilizando el host
+    network_mode: host
+    # Agregar la ruta que se quiere mapear dentro del contenedor (reemplazar solo "<ruta>")
+    volumes:
+      - /home/genaro/Facultad/PracticasBigData:/home/big_data/practica
+      - hdfs-data:/tmp/hadoop-root
+
+# Para persistir la informacion en HDFS
+volumes:
+  hdfs-data:
