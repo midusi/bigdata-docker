@@ -1,5 +1,5 @@
-$HADOOP_HOME/bin/hadoop  jar $HADOOP_STREAMING_HOME/hadoop-streaming.jar \
-    -input myInputDirs \
-    -output myOutputDir \
-    -mapper /bin/cat \
-    -reducer /bin/wc
+$HADOOP_HOME/bin/hadoop jar $HADOOP_STREAMING_HOME/hadoop-streaming.jar \
+    -input $1 \
+    -output $2 \
+    -mapper $3 \
+    -reducer $4

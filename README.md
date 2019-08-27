@@ -61,19 +61,37 @@ El proceso es el mismo para **spark-submit**:
 
 ### Hadoop
 
-- Debido a que la versión de Hadoop es diferente, el puerto para entrar al manager del master cambió de **50070** a **9870**.
+- Debido a que la versión de Hadoop es diferente, el puerto para:
+    - El manager del master cambió de **50070** a **9870**.
+    - El panel del cluster cambió de **8080** a **8088**.
 
 - **Compilación Java!!!**: ya no tenés que preocuparte por correr todos los comandos de compilación para Java. Se deja a disposición un script global llamado `compilarJava.sh`. Para usarlo seguir los siguientes pasos:
     1. Posicionarse en la carpeta del proyecto a compilar.
     1. El código fuente debe estar en una carpeta `src`. Y debe existir una carpeta `bin` a la misma altura.
     1. El script recibe los sig. parámetros: nombre del proyecto, package y clase pricipal (en el formato <package.clase>) y los parámetros propios del script. Ejemplo de Wordcount:
     
-        `compilarJava.sh ejemplo_wordcount wordcount.Main file:///..../Libros/pg13507.txt resultado_ejemplo`
+        ```
+        compilarJava.sh \
+            ejemplo_wordcount \
+            wordcount.Main \
+            file:///..../Libros/pg13507.txt \
+            resultado_ejemplo
+        ```
 
 ### Hadoop Streaming con Python
+
 - **Los scripts deben estar en python3**
 - La cabecera debe ser cambiada de `#!/usr/bin/env python` a `#!/usr/bin/python3`
 - El script ahora se simplificó para las nuevas rutas de los ejecutables. Ver nuevo script de ejecución en __ejecutarHadoopStreamingPython.sh__ (disponible ejemplo en el archivo __ejecutarHadoopStreamingPython-ejemplo.sh__)
+- **Al igual que con Hadoop**, se deja un script global que simplifica la ejecucion llamado `ejecutarHadoopStreamingPython.sh` que recibe 4 parámetros: source, dest, mapper y reducer. Ejemplo de Wordcount:
+
+    ```
+    ejecutarHadoopStreamingPython.sh \
+        file:///..../Libros/pg13507.txt \
+        resultados_python_streaming \
+        /home/big_data/practica/WordCount/Python/mapper.py \
+        /home/big_data/practica/WordCount/Python/reducer.py
+    ```
 
 ## Actualización de la imagen de Docker
 
