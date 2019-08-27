@@ -61,9 +61,7 @@ El proceso es el mismo para **spark-submit**:
 
 ### Hadoop
 
-- Debido a que la versión de Hadoop es diferente, el puerto para:
-    - El manager del master cambió de **50070** a **9870**.
-    - El panel del cluster cambió de **8080** a **8088**.
+- Debido a que la versión de Hadoop es diferente, el puerto para acceder al manager del master cambió de **50070** a **9870**.
 
 - **Compilación Java!!!**: ya no tenés que preocuparte por correr todos los comandos de compilación para Java. Se deja a disposición un script global llamado `compilarJava.sh`. Para usarlo seguir los siguientes pasos:
     1. Posicionarse en la carpeta del proyecto a compilar.
