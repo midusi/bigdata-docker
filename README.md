@@ -17,6 +17,12 @@ En la misma carpeta donde se encuentra el archivo docker-compose.yml ejecutar:
 
 Ahí mismo se abrirá una consola bash dentro del contenedor con todas las herramientas instaladas. Para salir del contenedor basta con ejecutar `exit` en dicha consola bash.
 
+Si se quiere entrar al mismo contenedor por diferentes consolas se puede hacer a través de:
+
+`docker container exec -it big_data bash`
+
+Eso abrirá una consola en el contenedor que está corriendo. Se pueden abrir cuantas consolas se quiera en un mismo contenedor. Todas las conexiones se cerrarán cuando se baje el contenedor.
+
 ## Iniciar Hadoop
 
 Para levantar los servicios de Hadoop se debe hacer uso del script __hadoopAction.sh__ ubicado en la carpeta principal __/home/big_data__.
@@ -56,6 +62,13 @@ El proceso es el mismo para **spark-submit**:
 ### Hadoop
 
 - Debido a que la versión de Hadoop es diferente, el puerto para entrar al manager del master cambió de **50070** a **9870**.
+
+- **Compilación Java!!!**: ya no tenés que preocuparte por correr todos los comandos de compilación para Java. Se deja a disposición un script global llamado `compilarJava.sh`. Para usarlo seguir los siguientes pasos:
+    1. Posicionarse en la carpeta del proyecto a compilar.
+    1. El código fuente debe estar en una carpeta `src`. Y debe existir una carpeta `bin` a la misma altura.
+    1. El script recibe los sig. parámetros: nombre del proyecto, package y clase pricipal (en el formato <package.clase>) y los parámetros propios del script. Ejemplo de Wordcount:
+    
+        `compilarJava.sh ejemplo_wordcount wordcount.Main file:///..../Libros/pg13507.txt resultado_ejemplo`
 
 ### Hadoop Streaming con Python
 - **Los scripts deben estar en python3**

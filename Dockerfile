@@ -59,6 +59,11 @@ COPY ./config/hdfs-site.xml .
 COPY ./config/mapred-site.xml .
 COPY ./config/yarn-site.xml .
 
+# Copio el script de compilacion de Java al directorio de ejecutables globales
+WORKDIR /usr/bin/
+COPY ./scripts/compilarJava.sh .
+RUN chmod +x /usr/bin/compilarJava.sh
+
 # Pasamos el script para levantar haddop en el directorio principal
 WORKDIR /home/big_data
 COPY ./config/hadoopAction.sh .
