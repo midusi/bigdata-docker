@@ -7,7 +7,18 @@
 
 1. Hacer un clone de este repositorio con `git clone git@github.com:midusi/bigdata-docker.git`
 
-1. Abrir el archivo __docker-compose.yml__ y editar donde dice __\<ruta\>__ definiendo la carpeta donde se van a manejar todos los archivos locales que queremos que sean accesibles desde el contenedor. Ej. __/home/Facultad/Big_data/Practicas:/home/big_data/practica__. Ahora todos los archivos de __/home/Facultad/Big_data/Practicas__ se encuentran en el contenedor dentro de la ruta __/home/big_data/practica__. **Nota importante**: no hace falta hacer un restart del contenedor cuando los archivos en el host son editador, los cambios se representan en tiempo real en el contenedor.
+1. Abrir el archivo __docker-compose.yml__ y editar donde dice __\<ruta\>__ definiendo la carpeta donde se van a manejar todos los archivos locales que queremos que sean accesibles desde el contenedor. Ej. __/home/Facultad/Big_data/Practicas:/home/big_data/practica__. Ahora todos los archivos de __/home/Facultad/Big_data/Practicas__ del host se encuentran en el contenedor dentro de la ruta __/home/big_data/practica__. **Nota importante**: no hace falta hacer un restart del contenedor cuando los archivos en el host son editador, los cambios se representan en tiempo real en el contenedor de manera **bilateral**.
+
+## Consideraciones **IMPORTANTES!**
+
+Considérese el contenedor como una máquina virtual sin interfaz gráfica donde se dejan todas las herramientas utilizadas durante la cursada. Cuando se cierra la consola donde corre el contenedor o se ejecuta el comando `exit` en el mismo este se cierra y hay que volver a levantarlo, el equivalente a cerrar la ventana del virtualbox donde corre la virtual o apagar la misma respectivamente. Hay otras diferencias que son muy importantes:
+
+1. **Todos los puertos del contenedor se mapean al host**, es decir, que si en el contenedor levantamos Hadoop y este abre un servicio web en el puerto 9870, se debería poder abrir un navegador en el host y acceder a `localhost:9870` sin problemas.
+
+1. **Nada de lo que NO esté mapeado en `docker-compose.yml` en la sección `volumes` se persiste**: todo lo que se cree en el contenedor una vez que este se baja se pierde, esto es una ventaja cuando se rompe la configuración o alguna dependencia, de esta manera el contenedor siempre se puede volver al estado funcional inicial. Lo que se mapee en la sección `volumes` será lo único que quedará guardado aún cuando el contenedor sea detenido. En nuestro caso definimos dos volumes:
+    
+    - **hdfs-data:/tmp/hadoop-root** es la carpeta donde Hadoop guarda los archivos del filesystem distribuido cuando hacemos uso del comando `hdfs dfs ...`. De esta manera no perdemos los resultados de los scripts que utilicen ese filesystem. **Esta línea no debería ser cambiada**.
+    - **\<ruta\>:/home/big_data/practica** para poder escribir scripts con nuestras propias herramientas en el host en la ruta __\<ruta\>__ y que dichos archivos sean accesibles en el directorio __/home/big_data/practica__ para utilizarlos con Hadoop, Spark, HDFS, y el resto del software instalado en el contenedor. **Esta línea debería ser cambiada para mapear el directorio en el host de preferencia**.
 
 ## Ejecución de entorno
 
@@ -91,8 +102,42 @@ El proceso es el mismo para **spark-submit**:
         /home/big_data/practica/WordCount/Python/reducer.py
     ```
 
+## Problemas comunes
+
+A continuación se listan los problemas más comunes y sus soluciones:
+
+#### Problema
+
+> Solving Docker permission denied while trying to connect to the Docker daemon socket
+
+#### Solución
+
+Se debe agregar el usuario actual al grupo "docker" del sistema como lo indica la [documentación post-instalación](https://docs.docker.com/install/linux/linux-postinstall/):
+
+```
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+```
+
+Correr `docker info` y verificar que no arroja el error.
+
+#### Problema
+
+> WARNING: Error loading config file: /home/user/.docker/config.json -stat /home/user/.docker/config.json: permission denied
+
+#### Solución
+
+Como se indica en la documentación post-instalación referenciada arriba, para solucionar este problema correr:
+
+```
+rm -rf ~/.docker/
+sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
+sudo chmod g+rwx "$HOME/.docker" -R
+```
+
 ## Actualización de la imagen de Docker
 
-En el caso de que se ageguen cambios a la imagen, se puede actualizar la misma ejecutando en una consola:
+En el caso de que se agreguen cambios a la imagen, se puede actualizar la misma ejecutando en una consola:
 
 `docker image pull genarocamele/bigdata:latest`
