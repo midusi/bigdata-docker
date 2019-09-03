@@ -44,7 +44,7 @@ Cuando se deje de usar ejecutar `./hadoopAction.sh stop` para bajar los servicio
 
 Hay scripts genéricos y con ejemplos de compilación tanto para Java como para Python utilizando Hadoop en la carpeta __scripts__ de este repositorio.
 
-## Ejecución de cluster con Spark
+## Ejecución de cluster con Spark (para cuando se pida en clase)
 
 En el nodo **Master**:
 
