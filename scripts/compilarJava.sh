@@ -7,6 +7,10 @@ fi
 nombreEjecutable=$1
 packageYClasePrincipal=$2
 
+# Ha habido errores con la compilacion porque no estaba vacia la carpeta bin.
+# Asi que por la dudas se borra
+rm -rf ./bin/*
+
 # Correr dentro de la carpeta con el codigo fuente (usualmente dentro de 'src')
 javac ./src/*.java -classpath $HADOOP_HOME/share/hadoop/common/lib/commons-cli-1.2.jar:$HADOOP_HOME/share/hadoop/common/hadoop-common-3.1.2.jar:$HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-core-3.1.2.jar -d ./bin/
 
