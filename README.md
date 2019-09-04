@@ -102,6 +102,10 @@ El proceso es el mismo para **spark-submit**:
         /home/big_data/practica/WordCount/Python/reducer.py
     ```
 
+### Spark Streaming
+
+- **Para abrir una conexión con netcat** en vez de utilizar `nc -lk 7777` utilizar `crearConexionStreaming.sh [<puerto>]` (el puerto es opcional, si no se especifica se usa por defecto el 7777). En caso de que quiera crear la conexión manualmente se puede correr `nc -lk -p 7777 localhost`.
+
 ## Problemas comunes
 
 A continuación se listan los problemas más comunes y sus soluciones:

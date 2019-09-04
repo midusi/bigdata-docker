@@ -39,6 +39,9 @@ RUN apt update \
     && mv ${HADOOP_STREAMING_HOME}/hadoop-streaming-3.1.2.jar ${HADOOP_STREAMING_HOME}/hadoop-streaming.jar \
     && source ~/.bashrc
 
+# TODO: que forme parte de la capa de arriba
+RUN apt install -y netcat
+
 # Algunas variables de entorno requeridas
 ENV HDFS_NAMENODE_USER "root"
 ENV HDFS_DATANODE_USER "root"
@@ -63,7 +66,8 @@ COPY ./config/yarn-site.xml .
 WORKDIR /usr/bin/
 COPY ./scripts/compilarJava.sh .
 COPY ./scripts/ejecutarHadoopStreamingPython.sh .
-RUN chmod +x /usr/bin/compilarJava.sh /usr/bin/ejecutarHadoopStreamingPython.sh
+COPY ./scripts/crearConexionStreaming.sh .
+RUN chmod +x /usr/bin/compilarJava.sh /usr/bin/ejecutarHadoopStreamingPython.sh crearConexionStreaming.sh
 
 # Pasamos el script para levantar haddop en el directorio principal
 WORKDIR /home/big_data
