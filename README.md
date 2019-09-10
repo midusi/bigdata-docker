@@ -140,6 +140,18 @@ sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
 sudo chmod g+rwx "$HOME/.docker" -R
 ```
 
+#### Problema
+
+Al querer levantar el contenedor arroja en pantalla:
+
+> Cannot create container for service bigdata: Conflict. The container name "\<algun nombre\>" is already in use
+
+#### Solución
+
+Este problema ocurre porque quedó levantado el contenedor. Basta con pararlo para que el comando funcione:
+
+`docker container rm -f big_data`
+
 ## Actualización de la imagen de Docker
 
 En el caso de que se agreguen cambios a la imagen, se puede actualizar la misma ejecutando en una consola:
