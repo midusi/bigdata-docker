@@ -34,4 +34,16 @@
       <value>4</value>
       <description>Ratio between virtual memory to physical memory when setting memory limits for containers</description>
     </property>
+    <property>
+      <name>yarn.resourcemanager.address</name>
+      <value>127.0.0.1:8032</value>
+    </property>
+    <property>
+      <name>yarn.resourcemanager.scheduler.address</name>
+      <value>127.0.0.1:8030</value>
+    </property>
+    <property>
+      <name>yarn.resourcemanager.resource-tracker.address</name>
+      <value>127.0.0.1:8031</value>
+    </property>
 </configuration>
