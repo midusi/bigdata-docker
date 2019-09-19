@@ -46,7 +46,7 @@ Hay scripts genéricos y con ejemplos de compilación tanto para Java como para 
 
 ## Ejemplos con Spark
 
-Se deja a disposición una serie de ejemplos en el directorio principal del contenedor (`/home/big_data/ejemplos`) con código de diferentes uso de Spark como Mlib, GraphX, entre otros. Se puede ejecutar con:
+Se deja a disposición una serie de ejemplos en el directorio principal del contenedor (`/home/big_data/ejemplos`) con código de diferentes usos de librerías de Spark como Mlib, GraphX, entre otros. Se puede ejecutar con:
 
 `spark-submit <script>`
 
