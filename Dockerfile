@@ -40,7 +40,7 @@ RUN apt update \
     && source ~/.bashrc
 
 # TODO: que forme parte de la capa de arriba
-RUN apt install -y netcat
+RUN apt install -y netcat python3-numpy
 
 # Algunas variables de entorno requeridas
 ENV HDFS_NAMENODE_USER "root"
@@ -72,6 +72,9 @@ RUN chmod +x /usr/bin/compilarJava.sh /usr/bin/ejecutarHadoopStreamingPython.sh 
 # Pasamos el script para levantar haddop en el directorio principal
 WORKDIR /home/big_data
 COPY ./config/hadoopAction.sh .
+
+# Pasamos los ejemplos al directorio principal
+COPY ./ejemplos ./ejemplos
 
 # Inicia en el entrypoint para reiniciar SSH
 ENTRYPOINT ["/entrypoint.sh"]

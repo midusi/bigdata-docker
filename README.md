@@ -44,6 +44,12 @@ Cuando se deje de usar ejecutar `./hadoopAction.sh stop` para bajar los servicio
 
 Hay scripts genéricos y con ejemplos de compilación tanto para Java como para Python utilizando Hadoop en la carpeta __scripts__ de este repositorio.
 
+## Ejemplos con Spark
+
+Se deja a disposición una serie de ejemplos en el directorio principal del contenedor (`/home/big_data/ejemplos`) con código de diferentes uso de Spark como Mlib, GraphX, entre otros. Se puede ejecutar con:
+
+`spark-submit <script>`
+
 ## Ejecución de cluster con Spark (para cuando se pida en clase)
 
 En el nodo **Master**:
