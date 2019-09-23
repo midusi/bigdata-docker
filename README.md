@@ -46,9 +46,17 @@ Hay scripts genéricos y con ejemplos de compilación tanto para Java como para 
 
 ## Ejemplos con Spark
 
-Se deja a disposición una serie de ejemplos en el directorio principal del contenedor (`/home/big_data/ejemplos`) con código de diferentes usos de librerías de Spark como Mlib, GraphX, entre otros. Se puede ejecutar con:
+Se deja a disposición una serie de ejemplos en el directorio principal del contenedor (`/home/big_data/ejemplos`) con código de diferentes usos de librerías de Spark como Mlib, GraphX, entre otros.
 
-`spark-submit <script>`
+Mlib se puede ejecutar con:
+
+`spark-submit <script de python>`
+
+Para GraphX hay que ejecutar `spark-shell` de la siguiente manera:
+
+`spark-shell -i <script de scala>`
+
+Si se quiere editar dichos ejemplos se recomienda copiar los scripts en el directorio mapeado (el mapeo se hizo desde el `docker-compose.yml` en la sección de instalación) para que los cambios no se pierdan cuando se baje el contenedor.
 
 ## Ejecución de cluster con Spark (para cuando se pida en clase)
 
