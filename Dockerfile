@@ -69,6 +69,10 @@ COPY ./scripts/ejecutarHadoopStreamingPython.sh .
 COPY ./scripts/crearConexionStreaming.sh .
 RUN chmod +x /usr/bin/compilarJava.sh /usr/bin/ejecutarHadoopStreamingPython.sh crearConexionStreaming.sh
 
+# Pasamos la configuracion de Spark
+WORKDIR /sbin/spark-2.4.3-bin-hadoop2.7/conf/
+COPY ./config/spark-env.sh .
+
 # Pasamos el script para levantar haddop en el directorio principal
 WORKDIR /home/big_data
 COPY ./config/hadoopAction.sh .
