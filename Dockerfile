@@ -72,6 +72,7 @@ RUN chmod +x /usr/bin/compilarJava.sh /usr/bin/ejecutarHadoopStreamingPython.sh 
 # Pasamos la configuracion de Spark
 WORKDIR /sbin/spark-2.4.3-bin-hadoop2.7/conf/
 COPY ./config/spark-env.sh .
+COPY ./config/log4j.properties .
 
 # Pasamos el script para levantar haddop en el directorio principal
 WORKDIR /home/big_data
