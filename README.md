@@ -68,7 +68,7 @@ En los nodos **Workers**:
 
 - Correr `start-slave.sh spark://<IP del nodo master>:7077`
 
-Se pueden ver los workers agregados en __<IP del nodo master>:8080__ (en la PC que lo hostea se puede acceder a través del **localhost:8080**).
+Se pueden ver los workers agregados en __\<IP del nodo master\>:8081__ (en la PC que lo hostea se puede acceder a través del **localhost:8080**).
 
 Los workers pueden ver su panel en el __localhost:8081__.
 
