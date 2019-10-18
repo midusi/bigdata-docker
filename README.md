@@ -5,7 +5,7 @@
 1. Instalar Docker para [Windows](https://docs.docker.com/docker-for-windows/install/), [MacOs](https://docs.docker.com/docker-for-mac/install/) o [Linux](https://docs.docker.com/install/) (ver distribución desplegando la opción Linux en el panel de la izquierda).
     - **(Solo Linux)** Instalar [docker-compose](https://docs.docker.com/compose/install/). En Windows y MacOs viene cuando se instala Docker.
 
-1. Hacer un clone de este repositorio con `git clone git@github.com:midusi/bigdata-docker.git`
+1. Hacer un clone de este repositorio con `git clone https://github.com/midusi/bigdata-docker.git`
 
 1. Abrir el archivo __docker-compose.yml__ y editar donde dice __\<ruta\>__ definiendo la carpeta donde se van a manejar todos los archivos locales que queremos que sean accesibles desde el contenedor. Ej. __/home/Facultad/Big_data/Practicas:/home/big_data/practica__. Ahora todos los archivos de __/home/Facultad/Big_data/Practicas__ del host se encuentran en el contenedor dentro de la ruta __/home/big_data/practica__. **Nota importante**: no hace falta hacer un restart del contenedor cuando los archivos en el host son editador, los cambios se representan en tiempo real en el contenedor de manera **bilateral**.
 
