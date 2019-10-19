@@ -16,7 +16,7 @@ services:
     network_mode: host
     # Agregar la ruta que se quiere mapear dentro del contenedor (reemplazar solo "<ruta>")
     volumes:
-      - <ruta>:/home/big_data/practica
+      - ${WORK_DIR}:/home/big_data/practica
       # No tocar la siguiente linea
       - hdfs-data:/tmp/hadoop-root
 

@@ -5,9 +5,17 @@
 1. Instalar Docker para [Windows](https://docs.docker.com/docker-for-windows/install/), [MacOs](https://docs.docker.com/docker-for-mac/install/) o [Linux](https://docs.docker.com/install/) (ver distribución desplegando la opción Linux en el panel de la izquierda).
     - **(Solo Linux)** Instalar [docker-compose](https://docs.docker.com/compose/install/). En Windows y MacOs viene cuando se instala Docker.
 
-1. Hacer un clone de este repositorio con `git clone https://github.com/midusi/bigdata-docker.git`
+2. Hacer un clone de este repositorio con `git clone https://github.com/midusi/bigdata-docker.git`
 
-1. Abrir el archivo __docker-compose.yml__ y editar donde dice __\<ruta\>__ definiendo la carpeta donde se van a manejar todos los archivos locales que queremos que sean accesibles desde el contenedor. Ej. __/home/Facultad/Big_data/Practicas:/home/big_data/practica__. Ahora todos los archivos de __/home/Facultad/Big_data/Practicas__ del host se encuentran en el contenedor dentro de la ruta __/home/big_data/practica__. **Nota importante**: no hace falta hacer un restart del contenedor cuando los archivos en el host son editador, los cambios se representan en tiempo real en el contenedor de manera **bilateral**.
+3. Crear un archivo `.env` (o realizar una copia del `.env.example` provisto); en este archivo se definen las variables de entorno que utiliza el contenedor. Luego, asignar a la variable `WORK_DIR` una ruta a la carpeta donde se van a manejar todos los archivos locales que queremos que sean accesibles desde el contenedor. Esta ruta puede ser relativa al directorio raiz (`./practica`), o bien, una ruta absoluta:
+
+Ejemplo:
+
+```yml
+    WORK_DIR=/home/Facultad/Big_data/Practicas
+```
+
+Ahora todos los archivos de __/home/Facultad/Big_data/Practicas__ del host se encuentran en el contenedor dentro de la ruta __/home/big_data/practica__. **Nota importante**: no hace falta hacer un restart del contenedor cuando los archivos en el host son editador, los cambios se representan en tiempo real en el contenedor de manera **bilateral**.
 
 ## Consideraciones **IMPORTANTES!**
 
@@ -15,10 +23,10 @@ Considérese el contenedor como una máquina virtual sin interfaz gráfica donde
 
 1. **Todos los puertos del contenedor se mapean al host**, es decir, que si en el contenedor levantamos Hadoop y este abre un servicio web en el puerto 9870, se debería poder abrir un navegador en el host y acceder a `localhost:9870` sin problemas.
 
-1. **Nada de lo que NO esté mapeado en `docker-compose.yml` en la sección `volumes` se persiste**: todo lo que se cree en el contenedor una vez que este se baja se pierde, esto es una ventaja cuando se rompe la configuración o alguna dependencia, de esta manera el contenedor siempre se puede volver al estado funcional inicial. Lo que se mapee en la sección `volumes` será lo único que quedará guardado aún cuando el contenedor sea detenido. En nuestro caso definimos dos volumes:
-    
+2. **Nada de lo que NO esté mapeado en `docker-compose.yml` en la sección `volumes` se persiste**: todo lo que se cree en el contenedor una vez que este se baja se pierde, esto es una ventaja cuando se rompe la configuración o alguna dependencia, de esta manera el contenedor siempre se puede volver al estado funcional inicial. Lo que se mapee en la sección `volumes` será lo único que quedará guardado aún cuando el contenedor sea detenido. En nuestro caso definimos dos volumes:
+
     - **hdfs-data:/tmp/hadoop-root** es la carpeta donde Hadoop guarda los archivos del filesystem distribuido cuando hacemos uso del comando `hdfs dfs ...`. De esta manera no perdemos los resultados de los scripts que utilicen ese filesystem. **Esta línea no debería ser cambiada**.
-    - **\<ruta\>:/home/big_data/practica** para poder escribir scripts con nuestras propias herramientas en el host en la ruta __\<ruta\>__ y que dichos archivos sean accesibles en el directorio __/home/big_data/practica__ para utilizarlos con Hadoop, Spark, HDFS, y el resto del software instalado en el contenedor. **Esta línea debería ser cambiada para mapear el directorio en el host de preferencia**.
+    - **\${WORK_DIR}\>:/home/big_data/practica** para poder escribir scripts con nuestras propias herramientas en el host en la ruta __\${WORK_DIR}__ y que dichos archivos sean accesibles en el directorio __/home/big_data/practica__ para utilizarlos con Hadoop, Spark, HDFS, y el resto del software instalado en el contenedor.
 
 ## Ejecución de entorno
 
@@ -92,7 +100,7 @@ El proceso es el mismo para **spark-submit**:
     1. Posicionarse en la carpeta del proyecto a compilar.
     1. El código fuente debe estar en una carpeta `src`. Y debe existir una carpeta `bin` a la misma altura.
     1. El script recibe los sig. parámetros: nombre del proyecto, package y clase pricipal (en el formato <package.clase>) y los parámetros propios del script. Ejemplo de Wordcount:
-    
+
         ```
         compilarJava.sh \
             ejemplo_wordcount \
