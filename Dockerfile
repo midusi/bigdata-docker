@@ -39,6 +39,9 @@ RUN apt update \
     && mv ${HADOOP_STREAMING_HOME}/hadoop-streaming-3.1.2.jar ${HADOOP_STREAMING_HOME}/hadoop-streaming.jar \
     && source ~/.bashrc
 
+# TODO: que forme parte de la capa de arriba
+RUN apt install -y netcat python3-numpy
+
 # Algunas variables de entorno requeridas
 ENV HDFS_NAMENODE_USER "root"
 ENV HDFS_DATANODE_USER "root"
@@ -63,11 +66,20 @@ COPY ./config/yarn-site.xml .
 WORKDIR /usr/bin/
 COPY ./scripts/compilarJava.sh .
 COPY ./scripts/ejecutarHadoopStreamingPython.sh .
-RUN chmod +x /usr/bin/compilarJava.sh /usr/bin/ejecutarHadoopStreamingPython.sh
+COPY ./scripts/crearConexionStreaming.sh .
+RUN chmod +x /usr/bin/compilarJava.sh /usr/bin/ejecutarHadoopStreamingPython.sh crearConexionStreaming.sh
+
+# Pasamos la configuracion de Spark
+WORKDIR /sbin/spark-2.4.3-bin-hadoop2.7/conf/
+COPY ./config/spark-env.sh .
+COPY ./config/log4j.properties .
 
 # Pasamos el script para levantar haddop en el directorio principal
 WORKDIR /home/big_data
 COPY ./config/hadoopAction.sh .
+
+# Pasamos los ejemplos al directorio principal
+COPY ./ejemplos ./ejemplos
 
 # Inicia en el entrypoint para reiniciar SSH
 ENTRYPOINT ["/entrypoint.sh"]
