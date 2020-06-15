@@ -118,7 +118,7 @@ El proceso es el mismo para **spark-submit**:
 
 ### Spark Streaming
 
-- **Para abrir una conexión con netcat** en vez de utilizar `nc -lk 7777` utilizar `crearConexionStreaming.sh [<puerto>]` (el puerto es opcional, si no se especifica se usa por defecto el 7777). En caso de que quiera crear la conexión manualmente se puede correr `nc -lk -p 7777 localhost`.
+- **Para abrir una conexión con netcat** en vez de utilizar `nc -lk 7777` utilizar `crearConexionStreaming.sh [<puerto>]` (el puerto es opcional, si no se especifica se usa por defecto el 7777). En caso de que quiera crear la conexión manualmente se puede correr `nc -lk -p 7777 127.0.0.1`.
 
 ## Problemas comunes
 

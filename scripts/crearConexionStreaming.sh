@@ -7,4 +7,4 @@ else
     PORT=$1
 fi
 
-nc -lk -p $PORT localhost
+nc -lk -p $PORT 127.0.0.1
