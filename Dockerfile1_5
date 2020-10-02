@@ -1,4 +1,4 @@
-# Formamos la imagen a partir de Ubuntu 18.04 LTS
+# Formamos la imagen a partir de Ubuntu 20.04 LTS
 FROM ubuntu:20.04
 
 # Definimos las variables de entorno requeridas por Hadoop
@@ -78,8 +78,14 @@ COPY ./config/hadoopAction.sh .
 # Pasamos los ejemplos al directorio principal
 COPY ./ejemplos ./ejemplos
 
-# Instalo algunas librerias
-RUN apt-get install -y netcat python3-numpy python3-pandas python3-sklearn python3-scipy
+# Instalo algunas librerias extras
+RUN apt-get update --fix-missing && apt-get install -y netcat software-properties-common build-essential cmake
+RUN add-apt-repository universe
+
+# Instalo algunas librerias de Python3
+COPY ./config/requirements.txt ./requirements.txt
+RUN apt-get install -y python3-pip
+RUN pip3 install -r ./requirements.txt
 
 # Inicia en el entrypoint para reiniciar SSH
 ENTRYPOINT ["/entrypoint.sh"]
